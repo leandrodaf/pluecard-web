@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    <b-container> teste </b-container>
+    <b-container> <router-view /> </b-container>
     <Footer></Footer>
   </div>
 </template>
+
 
 <script>
 import Navbar from "./components/Navbar.vue";

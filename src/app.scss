@@ -52,9 +52,12 @@ $theme-colors: map-merge(
 // Then import Bootstrap an BootstrapVue SCSS files (order is important)
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~bootstrap-vue/src/index.scss";
-// Then import Bootstrap an BootstrapVue SCSS files (order is important)
-@import "~bootstrap/scss/bootstrap.scss";
-@import "~bootstrap-vue/src/index.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+body {
+    font: normal normal normal 17px/10px Poppins;
+}
 
 .navbar-dark .navbar-nav {
     padding-top: 10px;
@@ -69,5 +72,9 @@ $theme-colors: map-merge(
     background-color: $white;
     color: $blue;
     border-radius: 5px;
-    
+}
+
+.plue-footer-bg {
+    background-color: $blue;
+    color: $white
 }
