@@ -35,6 +35,11 @@ export default new Vuex.Store({
       AuthService.logOut().catch(error => commit('saveError', error));
       commit('cleanLogin');
     },
+    cleanError({ commit }) {
+      commit('cleanLogin');
+      localStorage.removeItem('jwt')
+      return Promise.resolve(true);
+    },
     login({ commit }, user) {
       commit('cleanError');
 
