@@ -9,11 +9,13 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -22,7 +24,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Build React App
-        run: yarn && yarn build
+      - name: Install dependences
+        run: yarn install
+
+      - name: Install dependences
+        run: yarn build
+
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/ s3://teste.pluecard.com --delete
