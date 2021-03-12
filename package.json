@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "NODE_ENV=${NODE_ENV:=development} vue-cli-service serve --host=0.0.0.0",
-    "build": "NODE_ENV=${NODE_ENV:=development} vue-cli-service build --modern",
+    "build": "NODE_ENV=${NODE_ENV:=development} build --mode=production --modern",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
