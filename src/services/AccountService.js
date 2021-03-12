@@ -1,5 +1,4 @@
 import Http from './Http'
-// import User from '../models/User'
 
 class AccountService {
     register(user) {

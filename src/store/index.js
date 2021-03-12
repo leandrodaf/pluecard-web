@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import AuthService from '../services/AuthService';
 import AccountService from '../services/AccountService';
+import ErrorResponse from '../services/ErrorResponse'
 
 Vue.use(Vuex)
 
@@ -19,26 +20,41 @@ export default new Vuex.Store({
     },
     cleanLogin(state) {
       state.jwt = undefined;
+    },
+    cleanError(state) {
+      state.currentError = undefined;
+    },
+    saveError(state, error) {
+      state.currentError = ErrorResponse.response(error)
     }
   },
   actions: {
     logOut({ commit }) {
-      AuthService.logOut();
+      commit('cleanError');
+
+      AuthService.logOut().catch(error => commit('saveError', error));
       commit('cleanLogin');
     },
     login({ commit }, user) {
+      commit('cleanError');
+
       return AuthService.logIn(user).then((jwt) => {
         commit('loginSuccess', jwt);
         return Promise.resolve(jwt)
-      })
+      }).catch(error => commit('saveError', error))
     },
     register({ commit }, user) {
-      commit('');
-      return AccountService.register(user);
-    },
+      commit('cleanError');
 
+      return AccountService.register(user).catch(error => {
+        commit('saveError', error)
+      });
+    }
   },
   getters: {
+    getError: state => {
+      return state.currentError;
+    },
     isAuth: state => {
 
       if (state.jwt === undefined) {
