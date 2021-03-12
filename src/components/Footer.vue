@@ -1,5 +1,5 @@
 <template>
-  <footer class="plue-footer-bg">
+  <footer v-show="authentication" class="plue-footer-bg">
     <b-container class="py-5">
       <b-row>
         <b-col>
@@ -69,5 +69,24 @@
 }
 </style>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      authentication: false,
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isAuth;
+    },
+  },
+  watch: {
+    loggedIn(newCount) {
+      this.authentication = newCount;
+    },
+  },
+  created() {
+    this.authentication = this.loggedIn;
+  },
+};
 </script>

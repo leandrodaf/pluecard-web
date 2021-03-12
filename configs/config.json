@@ -1,0 +1,9 @@
+{
+    "development": {
+        "services": {
+            "pluecard": {
+                "host": "https://api.pluecard.com"
+            }
+        }
+    }
+}

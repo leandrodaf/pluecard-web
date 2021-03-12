@@ -1,5 +1,11 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="primary" style="padding: 20px">
+  <b-navbar
+    v-show="authentication"
+    toggleable="lg"
+    type="dark"
+    variant="primary"
+    style="padding: 20px"
+  >
     <b-container>
       <b-navbar-brand to="#">
         <img src="../assets/logo.png" />
@@ -26,7 +32,7 @@
             <b-icon-question class="icon-margin-nav" />
             Dúvidas
           </b-nav-item>
-          <b-nav-item to="/getOut">
+          <b-nav-item @click="logOut">
             <b-icon-download class="icon-margin-nav" rotate="270" />
             Sair
           </b-nav-item>
@@ -43,5 +49,29 @@
 </style>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      authentication: false,
+    };
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("logOut").then(() => this.$router.push("/login"));
+    },
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isAuth;
+    },
+  },
+  watch: {
+    loggedIn(newCount) {
+      this.authentication = newCount;
+    },
+  },
+  created() {
+    this.authentication = this.loggedIn;
+  }
+};
 </script>
