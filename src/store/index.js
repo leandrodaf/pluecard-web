@@ -55,6 +55,7 @@ export default new Vuex.Store({
     getError: state => {
       return state.currentError;
     },
+
     isAuth: state => {
 
       if (state.jwt === undefined) {
