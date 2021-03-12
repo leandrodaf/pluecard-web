@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV
 
 const instance = axios.create({
     baseURL: Config[env].services.pluecard.host,
-    timeout: 1000
+    timeout: 3000
 });
 
 class Http {

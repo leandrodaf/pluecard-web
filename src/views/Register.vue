@@ -4,11 +4,26 @@
       <b-col sm="6">
         <b-container style="padding-top: 80px">
           <img src="../assets/big-logo.png" height="150px" width="150px" />
+          <p>
+            <span
+              style="
+                font-size: x-large;
+                text-align: center;
+                font-family: normal normal medium 26px/36px Poppins;
+                letter-spacing: 0px;
+                color: #ffffff;
+              "
+              >Faça uma conta e</span
+            ><br />
+            <span style="font-size: x-large; font-weight: bold; color: #ffffff"
+              >crie o seu cartão digital</span
+            >
+          </p>
         </b-container>
       </b-col>
       <b-col sm="4">
         <b-container class="plue-bg-form">
-          <b-form @submit.prevent="handleLogin">
+          <b-form @submit.prevent="handleRegister">
             <h1
               style="
                 text-align: center;
@@ -18,8 +33,20 @@
                 opacity: 1;
               "
             >
-              Entrar
+              Crie sua conta
             </h1>
+
+            <b-form-group id="username-input">
+              <b-form-input
+                class="plue-input-form"
+                id="username"
+                type="text"
+                placeholder="Nome de usuário"
+                v-model="user.name"
+                required
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group id="email-input">
               <b-form-input
                 class="plue-input-form"
@@ -42,20 +69,35 @@
               ></b-form-input>
             </b-form-group>
 
+            <b-form-group id="pasword-input-confirmation">
+              <b-form-input
+                v-model="paswordConfirmation"
+                class="plue-input-form"
+                id="paswordConfirmation"
+                type="password"
+                placeholder="Confirmação de senha"
+                required
+              ></b-form-input>
+            </b-form-group>
 
-              <b-form-group id="forgotPassword" class="forgotPassword">
-                <a href="#">Esqueci minha senha</a>
-              </b-form-group>
-              
-              <b-button
-                type="submit"
-                variant="primary"
-                class="pluebutton-btn-form"
-                >Entrar</b-button
+            <b-input-group>
+              <b-form-checkbox
+                v-model="confirmation"
+                name="check-button"
+                switch
+                style="font-size: 15px"
               >
-              <p/>
+                Li e concordo com os <a href="#termos">termos de uso</a>
+              </b-form-checkbox>
+            </b-input-group>
 
-            <button v-google-signin-button="clientId" class="google-signin" />
+            <b-button
+              type="submit"
+              variant="primary"
+              class="pluebutton-btn-form"
+            >
+              Criar conta
+            </b-button>
           </b-form>
         </b-container>
       </b-col>
@@ -64,19 +106,15 @@
 </template>
 
 <script>
-import GoogleSignInButton from "vue-google-signin-button-directive";
-import Config from "../../configs/config.json";
 import User from "../models/User";
-const env = process.env.NODE_ENV;
 
 export default {
-  directives: {
-    GoogleSignInButton,
-  },
   name: "Login",
   data() {
     return {
-      clientId: Config[env].services.google.clientId,
+      accountCreate: false,
+      confirmation: false,
+      paswordConfirmation: undefined,
       user: new User(null, "", ""),
     };
   },
@@ -91,19 +129,14 @@ export default {
     }
   },
   methods: {
-    OnGoogleAuthSuccess(idToken) {
-      console.log(">>>", idToken);
-      // Receive the idToken and make your magic with the backend
-    },
-    OnGoogleAuthFail(error) {
-      console.log(error);
-    },
-
-    handleLogin() {
-      if (this.user.email && this.user.password) {
-        this.$store
-          .dispatch("login", this.user)
-          .then(() => this.$router.push({ name: "Home" }));
+    handleRegister() {
+      if (
+        this.user.password === this.paswordConfirmation &&
+        this.confirmation
+      ) {
+        this.$store.dispatch("register", this.user).then(() => {
+          this.accountCreate = false;
+        });
       }
     },
   },

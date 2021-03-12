@@ -53,10 +53,11 @@ $theme-colors: map-merge(
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~bootstrap-vue/src/index.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
 body {
-    font: normal normal normal 17px/10px Poppins;
+    font-family: 'Poppins', sans-serif;
+    line-height: 22px;
 }
 
 .navbar-dark .navbar-nav {

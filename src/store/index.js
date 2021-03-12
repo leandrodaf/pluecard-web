@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import AuthService from '../services/AuthService';
+import AccountService from '../services/AccountService';
 
 Vue.use(Vuex)
 
@@ -22,8 +23,8 @@ export default new Vuex.Store({
   },
   actions: {
     logOut({ commit }) {
-        commit('cleanLogin');
-        localStorage.removeItem('jwt');
+      AuthService.logOut();
+      commit('cleanLogin');
     },
     login({ commit }, user) {
       return AuthService.logIn(user).then((jwt) => {
@@ -31,6 +32,11 @@ export default new Vuex.Store({
         return Promise.resolve(jwt)
       })
     },
+    register({ commit }, user) {
+      commit('');
+      return AccountService.register(user);
+    },
+
   },
   getters: {
     isAuth: state => {
