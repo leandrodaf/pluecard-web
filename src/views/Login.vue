@@ -1,42 +1,43 @@
 <template>
-  <div class="plue-app flex-row align-items-center">
-    <b-container>
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="card-group">
-            <div
-              class="card text-center py-5 d-md-down-none bg-clean text-white"
+  <start-page>
+    <template slot:default>
+      <b-container class="bg-page" fluid>
+        <b-container>
+          <b-row>
+            <b-col
+              lg="6"
+              class="d-none d-sm-block text-center"
+              align-self="center"
             >
-              <div class="card-body">
-                <div class="card-body">
-                  <b-container style="padding-top: 80px">
-                    <img src="../assets/big-white-logo.png" height="180" />
-                  </b-container>
-                </div>
-              </div>
-            </div>
-            <div class="card card-login p-4">
-              <div class="card-body">
-                <form-login> </form-login>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
+              <img src="../assets/big-white-logo.png" height="180" />
+            </b-col>
+            <b-col lg="4" class="form-bg">
+              <login-form />
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-container>
+    </template>
+
+    <template slot="footer">
+      <div class="footer-login text-center">
         Não tem uma conta?<br />
-        <a href="#criarConta">Clique aqui faça a sua</a>
+        <router-link to="Register" class="rounded"
+          >Clique aqui e faça a sua!</router-link
+        >
       </div>
-    </b-container>
-  </div>
+    </template>
+  </start-page>
 </template>
 
 <script>
-import FormLogin from "./Login/FormLogin";
+import StartPage from "../template/StartPage";
+import LoginForm from "./Login/FormLogin";
 
 export default {
   components: {
-    FormLogin,
+    StartPage,
+    LoginForm,
   },
 
   name: "Login",
@@ -58,50 +59,31 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.plue-app {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  min-height: 100vh;
+.form-bg {
+  padding: 4rem 3rem;
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 14px;
+}
+
+.bg-page {
+  padding-top: 2.5rem;
   background-color: $primary;
+  border-radius: 0 0 50% 50%;
 }
 
-.justify-content-center {
-  -webkit-box-pack: center !important;
-  -ms-flex-pack: center !important;
-  justify-content: center !important;
+.footer-login {
+  line-height: 2rem;
+  color: #707070;
+  padding-bottom: 2rem;
 }
-
-.card-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
+.footer-login a {
+  color: #707070;
+  border: 1px solid #707070;
+  padding: 0.25rem;
 }
-
-.card-login {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0px;
-  border-radius: 0.25rem;
-  border-top-left-radius: 0.25rem !important;
-  border-bottom-left-radius: 0.25rem !important;
-}
-
-.bg-clean {
-  border: 0px;
-  background-color: #ffffff00;
+.footer-login a:hover {
+  color: #6d6d6d;
+  text-decoration: none;
 }
 </style>

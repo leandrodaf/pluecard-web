@@ -2,14 +2,14 @@
   <ValidationObserver ref="AutuhUser">
     <b-form
       slot-scope="{ validate, invalid }"
-      @submit.prevent="validate().then(handleLogin)"
+      @submit.prevent="validate().then(handleRegister)"
     >
       <b-container class="text-center title"><h2>Entrar</h2></b-container>
 
       <ValidationProvider vid="email" rules="required|email" name="Email">
         <b-form-group slot-scope="{ valid, errors }">
           <b-form-input
-            class="fild-login"
+            class="fild-register"
             type="text"
             v-model="user.email"
             :state="errors[0] ? false : valid ? true : null"
@@ -25,7 +25,7 @@
       <ValidationProvider vid="password" rules="required" name="Senha">
         <b-form-group slot-scope="{ valid, errors }">
           <b-form-input
-            class="fild-login"
+            class="fild-register"
             type="password"
             v-model="user.password"
             :state="errors[0] ? false : valid ? true : null"
@@ -67,44 +67,18 @@
 </template>
 
 <script>
-import GoogleSignInButton from "vue-google-signin-button-directive";
-import User from "../../models/User";
-import GoogleButton from "../../components/GoogleButton";
-import FacebookButton from "../../components/FacebookButton";
-import Config from "../../configs/config.json";
 import Separate from "../../components/Separate";
 export default {
   directives: {
     GoogleSignInButton,
   },
-  name: "FormLogin",
+  name: "FormRegister",
   components: {
-    GoogleButton,
-    FacebookButton,
     Separate,
   },
-  data: () => ({
-    clientId: Config.services.google.clientId,
-    user: new User(null, "", ""),
-  }),
+  data: () => ({}),
   methods: {
-    OnGoogleAuthSuccess(idToken) {
-      console.log(">>>", idToken);
-    },
-    OnGoogleAuthFail(error) {
-      console.log(error);
-    },
-
-    handleLogin() {
-      this.$store
-        .dispatch("login", this.user)
-        .then(() => this.$router.push({ name: "Home" }))
-        .catch((error) => {
-          error.hasErrorBag()
-            ? this.$refs.AutuhUser.setErrors(error.data.errors)
-            : undefined;
-        });
-    },
+    handleRegister() {},
   },
 };
 </script>
@@ -118,13 +92,10 @@ export default {
   color: #4d4d4d;
 }
 
-.fild-login {
+.fild-register {
   background: #f4f4f4 0% 0% no-repeat padding-box;
   border: 0px;
   border-radius: 5px;
 }
 
-.btn-social-login {
-  margin-top: 10px;
-}
 </style>
