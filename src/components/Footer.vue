@@ -53,7 +53,7 @@
   </footer>
 </template>
 
-<style>
+<style lang="scss" scope>
 .plue-social-icons-link-footer {
   color: #ffffff;
 }
@@ -66,6 +66,10 @@
 }
 .plue-link-color-footer {
   color: #ffffff;
+}
+.plue-footer-bg {
+  background-color: $blue;
+  color: $white;
 }
 </style>
 <script>
