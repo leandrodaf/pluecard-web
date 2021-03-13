@@ -1,84 +1,47 @@
 <template>
-  <b-container class="plue-container-global">
-    <b-row class="text-center">
-      <b-col sm="6">
-        <b-container style="padding-top: 80px">
-          <img src="../assets/big-logo.png" height="150px" width="150px" />
-        </b-container>
-      </b-col>
-      <b-col sm="4">
-        <b-container class="plue-bg-form">
-          <b-form @submit.prevent="handleLogin">
-            <h1
-              style="
-                text-align: center;
-                font: normal normal medium 40px/74px Poppins;
-                letter-spacing: 0px;
-                color: #4d4d4d;
-                opacity: 1;
-              "
+  <div class="plue-app flex-row align-items-center">
+    <b-container>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card-group">
+            <div
+              class="card text-center py-5 d-md-down-none bg-clean text-white"
             >
-              Entrar
-            </h1>
-            <b-form-group id="email-input">
-              <b-form-input
-                class="plue-input-form"
-                id="email"
-                type="email"
-                placeholder="E-mail"
-                v-model="user.email"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="pasword-input">
-              <b-form-input
-                class="plue-input-form"
-                id="pasword"
-                type="password"
-                placeholder="Senha"
-                v-model="user.password"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-
-              <b-form-group id="forgotPassword" class="forgotPassword">
-                <a href="#">Esqueci minha senha</a>
-              </b-form-group>
-              
-              <b-button
-                type="submit"
-                variant="primary"
-                class="pluebutton-btn-form"
-                >Entrar</b-button
-              >
-              <p/>
-
-            <button v-google-signin-button="clientId" class="google-signin" />
-          </b-form>
-        </b-container>
-      </b-col>
-    </b-row>
-  </b-container>
+              <div class="card-body">
+                <div class="card-body">
+                  <b-container style="padding-top: 80px">
+                    <img src="../assets/big-white-logo.png" height="180" />
+                  </b-container>
+                </div>
+              </div>
+            </div>
+            <div class="card card-login p-4">
+              <div class="card-body">
+                <form-login> </form-login>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        Não tem uma conta?<br />
+        <a href="#criarConta">Clique aqui faça a sua</a>
+      </div>
+    </b-container>
+  </div>
 </template>
 
 <script>
-import GoogleSignInButton from "vue-google-signin-button-directive";
-import Config from "../../configs/config.json";
-import User from "../models/User";
-const env = process.env.NODE_ENV;
+import FormLogin from "./Login/FormLogin";
 
 export default {
-  directives: {
-    GoogleSignInButton,
+  components: {
+    FormLogin,
   },
+
   name: "Login",
   data() {
-    return {
-      clientId: Config[env].services.google.clientId,
-      user: new User(null, "", ""),
-    };
+    return {};
   },
   computed: {
     loggedIn() {
@@ -90,76 +53,55 @@ export default {
       this.$router.push("/home");
     }
   },
-  methods: {
-    OnGoogleAuthSuccess(idToken) {
-      console.log(">>>", idToken);
-      // Receive the idToken and make your magic with the backend
-    },
-    OnGoogleAuthFail(error) {
-      console.log(error);
-    },
-
-    handleLogin() {
-      if (this.user.email && this.user.password) {
-        this.$store
-          .dispatch("login", this.user)
-          .then(() => this.$router.push({ name: "Home" }));
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style>
-.google-signin {
-  background-image: url("../assets/btn_google_signin_dark_normal_web.png");
-  display: inline-block;
-  width: 191px;
-  height: 46px;
-  border: 0px;
-}
-.google-signin:hover {
-  background-image: url("../assets/btn_google_signin_dark_focus_web.png");
-  cursor: pointer;
-}
-.google-signin:active {
-  background-image: url("../assets/btn_google_signin_dark_pressed_web.png");
-}
-.google-signin:disabled {
-  background-image: url("../assets/btn_google_signin_dark_disabled_web.png");
+<style lang="scss" scope>
+.plue-app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: $primary;
 }
 
-.forgotPassword {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.justify-content-center {
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
 }
-.pluebutton-btn-form {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  text-align: left;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
+
+.card-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
 }
-body {
-  background: #00aee9 0% 0% no-repeat padding-box;
-  opacity: 1;
-}
-.plue-input-form {
-  background: #f4f4f4 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  opacity: 1;
+
+.card-login {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
   border: 0px;
+  border-radius: 0.25rem;
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
 }
-.plue-container-global {
-  margin-top: 96px;
-}
-.plue-bg-form {
-  padding-top: 50px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 14px;
-  opacity: 1;
+
+.bg-clean {
+  border: 0px;
+  background-color: #ffffff00;
 }
 </style>

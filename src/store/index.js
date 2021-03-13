@@ -46,7 +46,10 @@ export default new Vuex.Store({
       return AuthService.logIn(user).then((jwt) => {
         commit('loginSuccess', jwt);
         return Promise.resolve(jwt)
-      }).catch(error => commit('saveError', error))
+      }).catch(error => {
+        commit('saveError', error)
+        return Promise.reject(error)
+      })
     },
     register({ commit }, user) {
       commit('cleanError');

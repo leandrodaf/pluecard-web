@@ -1,0 +1,10 @@
+{
+    "services": {
+        "google": {
+            "clientId": "984446285851-p18j7hilgsc1qhpv18me6e26s06plbhp"
+        },
+        "pluecard": {
+            "host": "https://api.pluecard.com"
+        }
+    }
+}

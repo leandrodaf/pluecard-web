@@ -1,11 +1,10 @@
 import axios from 'axios'
-import Config from '../../configs/config.json'
+import Config from '../configs/config.json'
 import HttpResponse from '../models/HttpResponse'
 import authHeader from './authHeader'
-const env = process.env.NODE_ENV
 
 const instance = axios.create({
-    baseURL: Config[env].services.pluecard.host,
+    baseURL: Config.services.pluecard.host,
     timeout: 3000
 });
 

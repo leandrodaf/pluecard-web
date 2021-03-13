@@ -42,9 +42,24 @@
   </b-navbar>
 </template>
 
-<style>
+<style lang="scss" scope>
 .icon-margin-nav {
   margin-right: 3px;
+}
+
+.navbar-dark .navbar-nav {
+  padding-top: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: $white;
+  padding-left: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: $white;
+  color: $blue;
+  border-radius: 5px;
 }
 </style>
 

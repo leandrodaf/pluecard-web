@@ -3,7 +3,7 @@
     <b-row class="text-center">
       <b-col sm="6">
         <b-container style="padding-top: 80px">
-          <img src="../assets/big-logo.png" height="150px" width="150px" />
+          <img src="../assets/big-white-logo.png" height="150px" width="150px" />
           <p>
             <span
               style="
@@ -144,24 +144,6 @@ export default {
 </script>
 
 <style>
-.google-signin {
-  background-image: url("../assets/btn_google_signin_dark_normal_web.png");
-  display: inline-block;
-  width: 191px;
-  height: 46px;
-  border: 0px;
-}
-.google-signin:hover {
-  background-image: url("../assets/btn_google_signin_dark_focus_web.png");
-  cursor: pointer;
-}
-.google-signin:active {
-  background-image: url("../assets/btn_google_signin_dark_pressed_web.png");
-}
-.google-signin:disabled {
-  background-image: url("../assets/btn_google_signin_dark_disabled_web.png");
-}
-
 .forgotPassword {
   margin-top: 20px;
   margin-bottom: 20px;
