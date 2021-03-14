@@ -59,7 +59,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
+
 })
 
 function nextFactory(context, middleware, index) {

@@ -10,6 +10,10 @@
               align-self="center"
             >
               <img src="../assets/big-white-logo.png" height="180" />
+              <p class="info-image">
+                Faça uma conta<br />
+                <span class="bold">crie seu cartão digital</span>
+              </p>
             </b-col>
             <b-col lg="4" class="form-bg-register">
               <register-form />
@@ -22,7 +26,7 @@
     <template slot="footer">
       <div class="footer-login text-center">
         Já tem uma conta?<br />
-        <router-link to="Login" class="rounded"
+        <router-link to="login" class="rounded"
           >Clique aqui para entrar!</router-link
         >
       </div>
@@ -59,6 +63,19 @@ export default {
 </script>
 
 <style lang="scss" scope>
+.info-image {
+  margin-top: 1rem;
+  text-align: center;
+  font: normal normal medium 26px/36px Poppins;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.info-image .bold {
+  font: normal normal bold 26px/36px Poppins;
+}
+
 .form-bg-register {
   padding: 2rem 3rem 1rem 3rem;
   background: $white 0% 0% no-repeat padding-box;

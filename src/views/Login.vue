@@ -22,7 +22,7 @@
     <template slot="footer">
       <div class="footer-login text-center">
         Não tem uma conta?<br />
-        <router-link to="Register" class="rounded"
+        <router-link to="register" class="rounded"
           >Clique aqui e faça a sua!</router-link
         >
       </div>
