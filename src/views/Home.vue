@@ -1,12 +1,14 @@
 <template>
-  <div class="home">Home page</div>
+  <auth-page>
+    <template slot:default> teste </template>
+  </auth-page>
 </template>
 
 <script>
-// @ is an alias to /src
+import AuthPage from "../template/AuthPage";
 
 export default {
   name: "Home",
-  components: {},
+  components: { AuthPage },
 };
 </script>

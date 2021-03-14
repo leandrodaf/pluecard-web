@@ -1,5 +1,14 @@
 <template>
-  <div class="question">
-    <h1>This is an Questions page</h1>
-  </div>
+  <auth-page>
+    <template slot:default> Question </template>
+  </auth-page>
 </template>
+
+<script>
+import AuthPage from "../template/AuthPage";
+
+export default {
+  name: "Question",
+  components: { AuthPage },
+};
+</script>
