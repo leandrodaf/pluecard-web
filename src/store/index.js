@@ -11,7 +11,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));
 
 export default new Vuex.Store({
   state: {
-    currentError: undefined,
+    currentNotification: undefined,
     jwt: jwt ? jwt : undefined
   },
   mutations: {
@@ -21,48 +21,49 @@ export default new Vuex.Store({
     cleanLogin(state) {
       state.jwt = undefined;
     },
-    cleanError(state) {
-      state.currentError = undefined;
+    cleanNotification(state) {
+      state.currentNotification = undefined;
     },
-    saveError(state, error) {
-      state.currentError = ErrorResponse.response(error)
+    saveNotification(state, data, isError = true) {
+      state.currentNotification = isError ? ErrorResponse.response(data) : data;
     }
+    
   },
   actions: {
     logOut({ commit }) {
-      commit('cleanError');
+      commit('cleanNotification');
 
-      AuthService.logOut().catch(error => commit('saveError', error));
+      AuthService.logOut().catch(error => commit('saveNotification', error));
       commit('cleanLogin');
     },
-    cleanError({ commit }) {
+    cleanNotification({ commit }) {
       commit('cleanLogin');
       localStorage.removeItem('jwt')
       return Promise.resolve(true);
     },
     login({ commit }, user) {
-      commit('cleanError');
+      commit('cleanNotification');
 
       return AuthService.logIn(user).then((jwt) => {
         commit('loginSuccess', jwt);
         return Promise.resolve(jwt)
       }).catch(error => {
-        commit('saveError', error)
+        commit('saveNotification', error)
         return Promise.reject(error)
       })
     },
     register({ commit }, user) {
-      commit('cleanError');
+      commit('cleanNotification');
 
       return AccountService.register(user).catch(error => {
-        commit('saveError', error)
+        commit('saveNotification', error)
         return Promise.reject(error)
       })
     }
   },
   getters: {
     getError: state => {
-      return state.currentError;
+      return state.currentNotification;
     },
 
     isAuth: state => {

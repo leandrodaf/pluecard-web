@@ -123,8 +123,4 @@ export default {
   border: 0px;
   border-radius: 5px;
 }
-
-.btn-social-login {
-  margin-top: 10px;
-}
 </style>

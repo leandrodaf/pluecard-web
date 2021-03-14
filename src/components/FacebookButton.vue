@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="facebook-button">
+  <button type="button" class="facebook-button social-btn">
     <span class="facebook-button__icon">
       <b-icon-facebook />
     </span>

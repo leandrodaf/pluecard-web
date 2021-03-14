@@ -11,7 +11,7 @@
             >
               <img src="../assets/big-white-logo.png" height="180" />
             </b-col>
-            <b-col lg="4" class="form-bg">
+            <b-col lg="4" class="form-bg-register">
               <register-form />
             </b-col>
           </b-row>
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.form-bg {
-  padding: 4rem 3rem;
+.form-bg-register {
+  padding: 2rem 3rem 1rem 3rem;
   background: $white 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 14px;

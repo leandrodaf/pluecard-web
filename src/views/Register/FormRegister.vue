@@ -88,7 +88,8 @@
             v-model="user.accept_terms"
             :state="errors[0] ? false : valid ? true : null"
           >
-            Li e concordo com os <a href="#">Termos de uso</a>
+            Li e concordo com os
+            <a href="#" v-b-modal.modal-scrollable>Termos de uso</a>
           </b-form-checkbox>
           <b-form-invalid-feedback>
             {{ errors[0] }}
@@ -102,18 +103,45 @@
 
       <b-container>
         <separate>Ou</separate>
+
+        <b-form-group class="text-center">
+          <google-button>Entre com Google</google-button>
+          <facebook-button>Entre com Facebook</facebook-button>
+        </b-form-group>
       </b-container>
+
+      <b-alert
+        v-model="confirmationAcount"
+        class="position-fixed fixed-top m-0 rounded-0 text-center"
+        style="z-index: 2000"
+        variant="success"
+        dismissible
+      >
+        Estamos quase la, faça a confirmação da sua conta em seue Email.
+      </b-alert>
+
+      <b-modal id="modal-scrollable" scrollable title="Scrollable Content">
+        <p class="my-4" v-for="i in 20" :key="i">
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.
+        </p>
+      </b-modal>
     </b-form>
   </ValidationObserver>
 </template>
 
 <script>
 import User from "../../models/User";
+import GoogleButton from "../../components/GoogleButton";
+import FacebookButton from "../../components/FacebookButton";
 
 import Separate from "../../components/Separate";
 export default {
   name: "FormRegister",
   components: {
+    GoogleButton,
+    FacebookButton,
     Separate,
   },
   data: () => ({
@@ -129,7 +157,6 @@ export default {
           this.confirmationAcount;
         })
         .catch((error) => {
-          console.log('>>>',error.data.errors);
           error.hasErrorBag()
             ? this.$refs.RegisterUser.setErrors(error.data.errors)
             : undefined;

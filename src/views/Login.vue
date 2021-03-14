@@ -11,7 +11,7 @@
             >
               <img src="../assets/big-white-logo.png" height="180" />
             </b-col>
-            <b-col lg="4" class="form-bg">
+            <b-col lg="4" class="form-bg-login">
               <login-form />
             </b-col>
           </b-row>
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.form-bg {
+.form-bg-login {
   padding: 4rem 3rem;
   background: $white 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
