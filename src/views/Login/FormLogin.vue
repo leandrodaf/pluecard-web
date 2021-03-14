@@ -40,7 +40,7 @@
 
       <b-container class="text-center">
         <p>
-          <a href="#">Esqueci minha senha</a>
+          <router-link to="/login/forgot">Esqueci minha senha</router-link>
         </p>
       </b-container>
 

@@ -24,10 +24,13 @@ export default new Vuex.Store({
     cleanNotification(state) {
       state.currentNotification = undefined;
     },
-    saveNotification(state, data, isError = true) {
+    saveNotification(state, { data, isError = true }) {
+
+      console.log('......', isError);
+
       state.currentNotification = isError ? ErrorResponse.response(data) : data;
     }
-    
+
   },
   actions: {
     logOut({ commit }) {
@@ -59,6 +62,24 @@ export default new Vuex.Store({
         commit('saveNotification', error)
         return Promise.reject(error)
       })
+    },
+    forgotPassword({ commit }, user) {
+
+      return AccountService.forgotPassword(user).catch(error => {
+        commit('saveNotification', error)
+        return Promise.reject(error)
+      })
+    },
+    confirmForgotPassword({ commit }, { user, hash }) {
+
+      return AccountService.confirmForgotPassword(user, hash).catch(error => {
+        commit('saveNotification', error)
+        return Promise.reject(error)
+      })
+    },
+    pushNotification({ commit }, data) {
+      commit('cleanNotification');
+      commit('saveNotification', { data: data, isError: false });
     }
   },
   getters: {

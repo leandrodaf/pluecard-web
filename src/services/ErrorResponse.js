@@ -9,7 +9,13 @@ class ErrorResponse {
             title: "Informações inválidas",
             body: "Verifique os dados preenchidos",
             varian: "warning"
+        },
+        "NotFoundError": {
+            title: "Solicitação não encontrada",
+            body: "Não conseguimos encontrar um resultado",
+            varian: "warning"
         }
+        
     };
 
     response(error) {

@@ -9,9 +9,33 @@ class AccountService {
             password: user.password,
             password_confirmation: user.password,
             newsletter: false,
-            discount_coupons: false
+            discount_coupons: false 
+        });
+    }
+
+    forgotPassword(user) {
+        return Http.post('/account/password/forgot', {
+            email: user.email
+        });
+    }
+
+    confirmForgotPassword(user, hash) {
+        const { password, password_confirmation } = user;
+
+
+        console.log('>>>>>>>>>>>>>', {
+            password,
+            password_confirmation,
+            hash
+        });
+
+        return Http.put('/account/password/forgot/reset', {
+            password,
+            password_confirmation,
+            hash
         })
     }
+
 }
 
 export default new AccountService()

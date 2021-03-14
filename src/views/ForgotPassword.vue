@@ -10,13 +10,9 @@
               align-self="center"
             >
               <img src="../assets/big-white-logo.png" height="180" />
-              <p class="info-image">
-                Faça uma conta<br />
-                <span class="bold">crie seu cartão digital</span>
-              </p>
             </b-col>
             <b-col lg="4" class="form-bg-register">
-              <register-form />
+              <form-forgot-password />
             </b-col>
           </b-row>
         </b-container>
@@ -25,10 +21,8 @@
 
     <template slot="footer">
       <div class="footer-login text-center">
-        Já tem uma conta?<br />
-        <router-link to="login" class="rounded"
-          >Clique aqui para entrar!</router-link
-        >
+        Lembrou sua senha?<br />
+        <router-link to="/login" class="rounded">Clique aqui!</router-link>
       </div>
     </template>
   </start-page>
@@ -36,15 +30,15 @@
 
 <script>
 import StartPage from "../template/StartPage";
-import RegisterForm from "./Register/FormRegister";
+import FormForgotPassword from "./ForgotPassword/FormForgotPassword";
 
 export default {
   components: {
     StartPage,
-    RegisterForm,
+    FormForgotPassword,
   },
 
-  name: "Register",
+  name: "ForgotPassword",
   data() {
     return {};
   },
@@ -63,19 +57,6 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.info-image {
-  margin-top: 1rem;
-  text-align: center;
-  font: normal normal medium 26px/36px Poppins;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
-}
-
-.info-image .bold {
-  font: normal normal bold 26px/36px Poppins;
-}
-
 .form-bg-register {
   padding: 2rem 3rem 1rem 3rem;
   background: $white 0% 0% no-repeat padding-box;
