@@ -17,11 +17,19 @@ export default {
         .dispatch("accountConfirmation", hash)
         .then(() => this.$router.push({ name: "Home" }))
         .catch((error) => {
-          error.hasErrorBag()
-            ? this.$refs.AutuhUser.setErrors(error.data.errors)
-            : undefined;
+          if (error.data.status === 404 || error.data.status === 400) {
+            this.$store.dispatch("pushNotification", {
+              title: "Hash de confirmação inválido",
+              body:
+                "O seu código de confirmação é invalido, crie um novo através do email que lhe enviamos.",
+              varian: "danger",
+            });
+          }
 
-          this.$router.push({ name: "Login" });
+          this.$router.push({
+            name: "Login",
+            params: { confirmationError: "test title" },
+          });
         });
     },
   },
