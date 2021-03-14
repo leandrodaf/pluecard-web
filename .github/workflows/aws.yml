@@ -27,7 +27,7 @@ jobs:
       - name: Install dependences
         run: yarn install
 
-      - name: Install dependences
+      - name: Build Project
         run: yarn build
 
       - name: Deploy app build to S3 bucket
