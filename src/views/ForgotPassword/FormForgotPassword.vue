@@ -93,7 +93,7 @@
           >
 
           <b-alert
-            v-model="confirmationReceivehash"
+            v-model="confirmationReset"
             class="position-fixed fixed-top m-0 rounded-0 text-center"
             style="z-index: 2000"
             variant="success"
@@ -115,6 +115,7 @@ export default {
   components: {},
   data: () => ({
     hash: false,
+    confirmationReset: false,
     confirmationReceivehash: false,
     user: new User(),
   }),
@@ -126,14 +127,24 @@ export default {
       this.$store
         .dispatch("confirmForgotPassword", { user: this.user, hash: this.hash })
         .then(() => {
-          this.$router.push("/login");
-          this.$store.dispatch("pushNotification", {
+          this.$router.push({name: 'Login'});
+          return this.$store.dispatch("pushNotification", {
             title: "Alteração de senha",
             body: "Alteração realizada com sucesso, refaça o login",
             varian: "success",
           });
         })
         .catch((error) => {
+       if (error.data.status === 404) {
+           this.hash = false;
+            this.$store.dispatch("pushNotification", {
+              title: "Hash inválido",
+              body: "Gere um novo código de recuperação de senha",
+              varian: "warning",
+            });
+            return this.$router.push({name: 'ForgotPassword'});
+          }
+
           error.hasErrorBag()
             ? this.$refs.ForgotPassword.setErrors(error.data.errors)
             : undefined;
@@ -146,7 +157,7 @@ export default {
           this.confirmationReset = true;
         })
         .catch((error) => {
-          error.hasErrorBag()
+             error.hasErrorBag()
             ? this.$refs.ForgotPassword.setErrors(error.data.errors)
             : undefined;
         });

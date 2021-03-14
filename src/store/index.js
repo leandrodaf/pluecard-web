@@ -25,9 +25,6 @@ export default new Vuex.Store({
       state.currentNotification = undefined;
     },
     saveNotification(state, { data, isError = true }) {
-
-      console.log('......', isError);
-
       state.currentNotification = isError ? ErrorResponse.response(data) : data;
     }
 
@@ -36,7 +33,7 @@ export default new Vuex.Store({
     logOut({ commit }) {
       commit('cleanNotification');
 
-      AuthService.logOut().catch(error => commit('saveNotification', error));
+      AuthService.logOut().catch(error => commit('saveNotification', { data: error }));
       commit('cleanLogin');
     },
     cleanNotification({ commit }) {
@@ -51,7 +48,7 @@ export default new Vuex.Store({
         commit('loginSuccess', jwt);
         return Promise.resolve(jwt)
       }).catch(error => {
-        commit('saveNotification', error)
+        commit('saveNotification', { data: error })
         return Promise.reject(error)
       })
     },
@@ -59,21 +56,21 @@ export default new Vuex.Store({
       commit('cleanNotification');
 
       return AccountService.register(user).catch(error => {
-        commit('saveNotification', error)
+        commit('saveNotification', { data: error })
         return Promise.reject(error)
       })
     },
     forgotPassword({ commit }, user) {
 
       return AccountService.forgotPassword(user).catch(error => {
-        commit('saveNotification', error)
+        commit('saveNotification', { data: error })
         return Promise.reject(error)
       })
     },
     confirmForgotPassword({ commit }, { user, hash }) {
 
       return AccountService.confirmForgotPassword(user, hash).catch(error => {
-        commit('saveNotification', error)
+        commit('saveNotification', { data: error })
         return Promise.reject(error)
       })
     },

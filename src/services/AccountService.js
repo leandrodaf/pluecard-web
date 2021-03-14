@@ -22,13 +22,6 @@ class AccountService {
     confirmForgotPassword(user, hash) {
         const { password, password_confirmation } = user;
 
-
-        console.log('>>>>>>>>>>>>>', {
-            password,
-            password_confirmation,
-            hash
-        });
-
         return Http.put('/account/password/forgot/reset', {
             password,
             password_confirmation,
