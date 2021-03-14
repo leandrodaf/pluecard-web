@@ -56,7 +56,8 @@ export default new Vuex.Store({
 
       return AccountService.register(user).catch(error => {
         commit('saveError', error)
-      });
+        return Promise.reject(error)
+      })
     }
   },
   getters: {

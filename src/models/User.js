@@ -4,12 +4,13 @@ class User {
         this.name = name || null;
         this.password = password || null;
         this.email = email || null;
-        this.accept_terms = accept_terms || null;
-        this.newsletter = newsletter || null;
-        this.discount_coupons = discount_coupons || null;
-        this.confirmation_email = confirmation_email || null;
+        this.accept_terms = accept_terms || false;
+        this.newsletter = newsletter || false;
+        this.discount_coupons = discount_coupons || false;
+        this.confirmation_email = confirmation_email || false;
         this.created_at = created_at || null;
         this.updated_at = updated_at || null;
+        this.password_confirmation || null
     }
 }
 

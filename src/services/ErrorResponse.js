@@ -19,29 +19,7 @@ class ErrorResponse {
             return defaultResponse;
         }
 
-        let errors = this.errors[error.data.code]
-
-        if (error.data.errors) {
-            const result = Object.keys(error.data.errors).map((index) => {
-                let list = undefined;
-
-                const data = error.data.errors[index];
-
-                if (Array.isArray(data)) {
-                    list = data.join(', ')
-                } else {
-                    list = data;
-                }
-
-                return `${index}: ${list}`
-            })
-
-            if (result !== undefined) {
-                errors.result = result;
-            }
-
-        }
-        return errors;
+        return this.errors[error.data.code];
     }
 }
 

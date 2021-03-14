@@ -1,122 +1,48 @@
 <template>
-  <b-container class="plue-container-global">
-    <b-row class="text-center">
-      <b-col sm="6">
-        <b-container style="padding-top: 80px">
-          <img src="../assets/big-white-logo.png" height="150px" width="150px" />
-          <p>
-            <span
-              style="
-                font-size: x-large;
-                text-align: center;
-                font-family: normal normal medium 26px/36px Poppins;
-                letter-spacing: 0px;
-                color: #ffffff;
-              "
-              >Faça uma conta e</span
-            ><br />
-            <span style="font-size: x-large; font-weight: bold; color: #ffffff"
-              >crie o seu cartão digital</span
+  <start-page>
+    <template slot:default>
+      <b-container class="bg-page" fluid>
+        <b-container>
+          <b-row>
+            <b-col
+              lg="6"
+              class="d-none d-sm-block text-center"
+              align-self="center"
             >
-          </p>
+              <img src="../assets/big-white-logo.png" height="180" />
+            </b-col>
+            <b-col lg="4" class="form-bg">
+              <register-form />
+            </b-col>
+          </b-row>
         </b-container>
-      </b-col>
-      <b-col sm="4">
-        <b-container class="plue-bg-form">
-          <b-form @submit.prevent="handleRegister">
-            <h1
-              style="
-                text-align: center;
-                font: normal normal medium 40px/74px Poppins;
-                letter-spacing: 0px;
-                color: #4d4d4d;
-                opacity: 1;
-              "
-            >
-              Crie sua conta
-            </h1>
+      </b-container>
+    </template>
 
-            <b-form-group id="username-input">
-              <b-form-input
-                class="plue-input-form"
-                id="username"
-                type="text"
-                placeholder="Nome de usuário"
-                v-model="user.name"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="email-input">
-              <b-form-input
-                class="plue-input-form"
-                id="email"
-                type="email"
-                placeholder="E-mail"
-                v-model="user.email"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="pasword-input">
-              <b-form-input
-                class="plue-input-form"
-                id="pasword"
-                type="password"
-                placeholder="Senha"
-                v-model="user.password"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="pasword-input-confirmation">
-              <b-form-input
-                v-model="paswordConfirmation"
-                class="plue-input-form"
-                id="paswordConfirmation"
-                type="password"
-                placeholder="Confirmação de senha"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-input-group>
-              <b-form-checkbox
-                v-model="confirmation"
-                name="check-button"
-                switch
-                style="font-size: 15px"
-              >
-                Li e concordo com os <a href="#termos">termos de uso</a>
-              </b-form-checkbox>
-            </b-input-group>
-
-            <b-button
-              type="submit"
-              variant="primary"
-              class="pluebutton-btn-form"
-            >
-              Criar conta
-            </b-button>
-          </b-form>
-        </b-container>
-      </b-col>
-    </b-row>
-  </b-container>
+    <template slot="footer">
+      <div class="footer-login text-center">
+        Já tem uma conta?<br />
+        <router-link to="Login" class="rounded"
+          >Clique aqui para entrar!</router-link
+        >
+      </div>
+    </template>
+  </start-page>
 </template>
 
 <script>
-import User from "../models/User";
+import StartPage from "../template/StartPage";
+import RegisterForm from "./Register/FormRegister";
 
 export default {
+  components: {
+    StartPage,
+    RegisterForm,
+  },
+
   name: "Login",
   data() {
-    return {
-      accountCreate: false,
-      confirmation: false,
-      paswordConfirmation: undefined,
-      user: new User(null, "", ""),
-    };
+    return {};
   },
   computed: {
     loggedIn() {
@@ -128,53 +54,36 @@ export default {
       this.$router.push("/home");
     }
   },
-  methods: {
-    handleRegister() {
-      if (
-        this.user.password === this.paswordConfirmation &&
-        this.confirmation
-      ) {
-        this.$store.dispatch("register", this.user).then(() => {
-          this.accountCreate = false;
-        });
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style>
-.forgotPassword {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.pluebutton-btn-form {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  text-align: left;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
-}
-body {
-  background: #00aee9 0% 0% no-repeat padding-box;
-  opacity: 1;
-}
-.plue-input-form {
-  background: #f4f4f4 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  opacity: 1;
-  border: 0px;
-}
-.plue-container-global {
-  margin-top: 96px;
-}
-.plue-bg-form {
-  padding-top: 50px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+<style lang="scss" scope>
+.form-bg {
+  padding: 4rem 3rem;
+  background: $white 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 14px;
-  opacity: 1;
+}
+
+.bg-page {
+  padding-top: 2.5rem;
+  background-color: $primary;
+  border-radius: 0 0 50% 50%;
+}
+
+.footer-login {
+  line-height: 2rem;
+  color: #707070;
+  padding-bottom: 2rem;
+}
+.footer-login a {
+  color: #707070;
+  border: 1px solid #707070;
+  padding: 0.25rem;
+}
+.footer-login a:hover {
+  color: #6d6d6d;
+  text-decoration: none;
 }
 </style>

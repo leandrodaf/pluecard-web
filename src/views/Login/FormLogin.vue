@@ -85,7 +85,7 @@ export default {
   },
   data: () => ({
     clientId: Config.services.google.clientId,
-    user: new User(null, "", ""),
+    user: new User(),
   }),
   methods: {
     OnGoogleAuthSuccess(idToken) {
