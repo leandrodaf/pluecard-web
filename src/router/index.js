@@ -7,6 +7,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/account/confirmation',
+    name: 'AccountConfirmation',
+    component: () => import('../views/AccountConfirmation.vue'),
+  },
+  {
     path: '/register',
     name: 'Register',
     component: () => import('../views/Register.vue'),

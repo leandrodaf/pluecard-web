@@ -19,6 +19,22 @@ class AuthService {
         });
     }
 
+    accountConfirmation(hash) {
+        return Http.post('/account/confirmation', {
+            hash
+        }).then(response => {
+            const jwt = new JWT(
+                response.data.access_token,
+                response.data.token_type,
+                response.data.expires_in
+            )
+
+            localStorage.setItem('jwt', JSON.stringify(jwt));
+
+            return Promise.resolve(jwt);
+        });
+    }
+
     logOut() {
         return Http.post('/auth/logout', {})
             .then(() => localStorage.removeItem('jwt'));

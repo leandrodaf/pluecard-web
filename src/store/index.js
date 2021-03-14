@@ -52,6 +52,17 @@ export default new Vuex.Store({
         return Promise.reject(error)
       })
     },
+    accountConfirmation({ commit }, hash) {
+      commit('cleanNotification');
+
+      return AuthService.accountConfirmation(hash).then((jwt) => {
+        commit('loginSuccess', jwt);
+        return Promise.resolve(jwt)
+      }).catch(error => {
+        commit('saveNotification', { data: error })
+        return Promise.reject(error)
+      })
+    },
     register({ commit }, user) {
       commit('cleanNotification');
 
