@@ -32,6 +32,7 @@ export default {
     const that = this;
     const checkGALoad = setInterval(function () {
       that.isInit = that.$google.isInit;
+      console.log('>>>>', that.isInit);
       if (that.isInit) {
         that.isSignedIn = that.$google.api.auth2
           .getAuthInstance()
