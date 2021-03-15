@@ -27,6 +27,8 @@ export default {
 
 <style lang="scss" scope>
 .main {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   display: block;
 }
 </style>
