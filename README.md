@@ -1,3 +1,5 @@
+[![Deploy to Amazon S3](https://github.com/leandrodaf/pluecard-web/actions/workflows/aws.yml/badge.svg?branch=main)](https://github.com/leandrodaf/pluecard-web/actions/workflows/aws.yml)
+
 # pluecard-web
 
 ## Project setup
