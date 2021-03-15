@@ -10,6 +10,13 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
+import GoogleAPIs from 'vue-googleapis'
+
+Vue.use(GoogleAPIs, {
+  clientId: '984446285851-p18j7hilgsc1qhpv18me6e26s06plbhp.apps.googleusercontent.com',
+  scope: 'profile email'
+})
+
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)

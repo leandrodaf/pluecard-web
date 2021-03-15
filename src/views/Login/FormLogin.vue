@@ -50,51 +50,28 @@
 
       <b-container>
         <separate>Ou</separate>
-
-        <b-form-group class="text-center">
-          <google-button
-            v-google-signin-button="clientId"
-            class="btn-social-login"
-            >Entre com Google</google-button
-          >
-          <facebook-button class="btn-social-login"
-            >Entre com Facebook</facebook-button
-          >
-        </b-form-group>
+        <social-login />
       </b-container>
     </b-form>
   </ValidationObserver>
 </template>
 
 <script>
-import GoogleSignInButton from "vue-google-signin-button-directive";
 import User from "../../models/User";
-import GoogleButton from "../../components/GoogleButton";
-import FacebookButton from "../../components/FacebookButton";
-import Config from "../../configs/config.json";
+import SocialLogin from "./SocialLogin";
 import Separate from "../../components/Separate";
+
 export default {
-  directives: {
-    GoogleSignInButton,
-  },
+  directives: {},
   name: "FormLogin",
   components: {
-    GoogleButton,
-    FacebookButton,
+    SocialLogin,
     Separate,
   },
   data: () => ({
-    clientId: Config.services.google.clientId,
     user: new User(),
   }),
   methods: {
-    OnGoogleAuthSuccess(idToken) {
-      console.log(">>>", idToken);
-    },
-    OnGoogleAuthFail(error) {
-      console.log(error);
-    },
-
     handleLogin() {
       this.$store
         .dispatch("login", this.user)
