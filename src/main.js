@@ -4,6 +4,7 @@ import App from './App.vue'
 
 import "./app.scss";
 import './vee-validate'
+import i18n from './i18n-setup'
 
 import router from './router'
 import store from './store'
@@ -17,5 +18,6 @@ Vue.use(IconsPlugin)
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')
