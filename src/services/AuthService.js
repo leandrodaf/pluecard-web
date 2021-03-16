@@ -19,6 +19,20 @@ class AuthService {
         });
     }
 
+    socialLogin(driver, dataAuth) {
+        return Http.post(`/auth/login/social/${driver}`, dataAuth).then(response => {
+            const jwt = new JWT(
+                response.data.access_token,
+                response.data.token_type,
+                response.data.expires_in
+            )
+
+            localStorage.setItem('jwt', JSON.stringify(jwt));
+
+            return Promise.resolve(jwt);
+        });
+    }
+
     accountConfirmation(hash) {
         return Http.post('/account/confirmation', {
             hash

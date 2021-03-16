@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import gauth from './modules/gauth'
 import AuthService from '../services/AuthService';
 import AccountService from '../services/AccountService';
 import ErrorResponse from '../services/ErrorResponse'
@@ -52,6 +53,18 @@ export default new Vuex.Store({
         return Promise.reject(error)
       })
     },
+
+    socialLogin({ commit }, { driver, dataAuth }) {
+      commit('cleanNotification');
+      return AuthService.socialLogin(driver, dataAuth).then((jwt) => {
+        commit('loginSuccess', jwt);
+        return Promise.resolve(jwt)
+      }).catch(error => {
+        commit('saveNotification', { data: error })
+        return Promise.reject(error)
+      })
+    },
+
     accountConfirmation({ commit }, hash) {
       commit('cleanNotification');
 
@@ -106,6 +119,9 @@ export default new Vuex.Store({
         date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 
       return new Date() <= new Date(now_utc);
-    }
+    },
+  },
+  modules: {
+    gauth
   }
 })

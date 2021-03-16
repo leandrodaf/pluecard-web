@@ -1,3 +1,16 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.00251 14.9297L0 1.07422H6.14651L8.00251 4.27503L9.84583 1.07422H16L8.00251 14.9297Z" fill="black"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Camada_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#00AEE9;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#64FF00;}
+	.st3{fill:#FF0000;}
+</style>
+<g>
+	<rect x="0" y="0" class="st0" width="16" height="16"/>
+	<path class="st1" d="M8,2.8L8,2.8c-2.88,0-5.21,2.33-5.21,5.21v0v0.54v6.37c0,0.48,0.53,0.73,0.83,0.38l2.27-2.53
+		c0.64,0.28,1.35,0.44,2.1,0.44h0c2.88,0,5.21-2.33,5.21-5.21v0C13.21,5.13,10.88,2.8,8,2.8z"/>
+</g>
 </svg>

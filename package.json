@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "NODE_ENV=${NODE_ENV:=development} vue-cli-service serve --host=0.0.0.0",
     "build": "vue-cli-service build --modern --mode=development",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint --fix"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -15,7 +15,6 @@
     "register-service-worker": "^1.7.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
-    "vue-google-signin-button-directive": "^1.0.3",
     "vue-googleapis": "^1.0.10",
     "vue-i18n": "^8.24.1",
     "vue-router": "^3.2.0",
