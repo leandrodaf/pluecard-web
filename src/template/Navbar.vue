@@ -81,8 +81,8 @@ export default {
       this.$store
         .dispatch("logOut")
         .then(() => this.$router.push({ name: "Login" }));
-      console.log(">>>", this.isSignedIn, !this.gauthReady);
-      if (this.isSignedIn && !this.gauthReady) {
+
+      if (this.gauthReady && this.isSignedIn) {
         this.signOut();
       }
     },
