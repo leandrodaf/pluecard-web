@@ -2,8 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
 import auth from './middleware/auth'
+import userContext from './middleware/userContext'
 
 Vue.use(VueRouter)
+
+const routerMiddleware = [userContext]
 
 const routes = [
   {
@@ -104,5 +107,13 @@ router.beforeEach((to, from, next) => {
 
   return next();
 });
+
+router.beforeResolve((to, from, next) => {
+
+  routerMiddleware.forEach((middleware) => middleware({ from, next, router, to, store }));
+
+  return next();
+});
+
 
 export default router

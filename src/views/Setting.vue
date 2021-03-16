@@ -12,9 +12,9 @@
                   @submit.prevent="validate().then(handleLogin)"
                 >
                   <ValidationProvider
-                    vid="Nome de usuário"
+                    vid="username"
                     rules="required"
-                    name="username"
+                    name="Nome de usuário"
                   >
                     <b-form-group
                       slot-scope="{ valid, errors }"
@@ -22,11 +22,11 @@
                       label-for="username-field"
                     >
                       <b-form-input
-                        :disabled="isResetPassword"
+                        :disabled="hash"
                         id="username-field"
                         class="input-field-setting"
                         type="text"
-                        v-model="user.username"
+                        v-model="user.name"
                         :state="errors[0] ? false : valid ? true : null"
                         placeholder="Nome completo"
                       >
@@ -37,16 +37,11 @@
                     </b-form-group>
                   </ValidationProvider>
 
-                  <ValidationProvider
-                    vid="email"
-                    rules="required|email"
-                    name="email"
-                  >
+                  <ValidationProvider vid="email" name="email">
                     <b-form-group
                       slot-scope="{ errors }"
                       label="E-mail:"
                       label-for="email-field"
-                      cl
                     >
                       <b-form-input
                         disabled
@@ -63,18 +58,92 @@
                     </b-form-group>
                   </ValidationProvider>
 
+                  <ValidationProvider vid="fakePassword" v-if="!hash">
+                    <b-form-group
+                      slot-scope="{ errors }"
+                      label="Senha:"
+                      label-for="password-field"
+                    >
+                      <b-form-input
+                        disabled
+                        id="password-field"
+                        class="input-field-setting"
+                        type="password"
+                        v-model="passwordfake"
+                      >
+                      </b-form-input>
+                      <a href="#">Solicitar a troca da senha</a>
+                      <b-form-invalid-feedback>
+                        {{ errors[0] }}
+                      </b-form-invalid-feedback>
+                    </b-form-group>
+                  </ValidationProvider>
+
+                  <ValidationProvider
+                    v-if="hash"
+                    vid="newPassword"
+                    :rules="hash ? required : null"
+                    name="Nova senha"
+                  >
+                    <b-form-group
+                      slot-scope="{ valid, errors }"
+                      label="Nova senha:"
+                      label-for="newPassword-field"
+                    >
+                      <b-form-input
+                        id="newPassword-field"
+                        class="input-field-setting"
+                        type="password"
+                        v-model="user.password"
+                        :state="errors[0] ? false : valid ? true : null"
+                        placeholder="Nova senha"
+                      >
+                      </b-form-input>
+                      <b-form-invalid-feedback>
+                        {{ errors[0] }}
+                      </b-form-invalid-feedback>
+                    </b-form-group>
+                  </ValidationProvider>
+
+                  <ValidationProvider
+                    v-if="hash"
+                    vid="newPasswordConfirmation"
+                    :rules="hash ? 'required|confirmed:newPassword' : null"
+                    name="Confirmação da senha"
+                  >
+                    <b-form-group
+                      slot-scope="{ valid, errors }"
+                      label="Confirmação da senha:"
+                      label-for="newPasswordConfirmation-field"
+                    >
+                      <b-form-input
+                        id="newPasswordConfirmation-field"
+                        class="input-field-setting"
+                        type="password"
+                        v-model="user.password_confirmation"
+                        :state="errors[0] ? false : valid ? true : null"
+                        placeholder="Confirmação da senha"
+                      >
+                      </b-form-input>
+                      <b-form-invalid-feedback>
+                        {{ errors[0] }}
+                      </b-form-invalid-feedback>
+                    </b-form-group>
+                  </ValidationProvider>
+
                   <b-button
                     block
                     type="submit"
                     variant="primary"
                     :disabled="invalid"
-                    >Solicitar</b-button
                   >
+                    {{ hash ? "Atualizar senha" : "Solicitar alterações" }}
+                  </b-button>
                 </b-form>
               </ValidationObserver>
             </div>
           </b-col>
-          <b-col lg="4" class="form-bg-login">
+          <b-col lg="4">
             <div class="title text-center"><h2>Config</h2></div>
             <div class="form">
               <ValidationObserver ref="accountInfo">
@@ -90,7 +159,6 @@
                     <b-form-group slot-scope="{ valid, errors }">
                       <b-form-checkbox
                         class="fild-register"
-                        type="password"
                         v-model="user.newsletter"
                         :state="errors[0] ? false : valid ? true : null"
                       >
@@ -110,7 +178,6 @@
                     <b-form-group slot-scope="{ valid, errors }">
                       <b-form-checkbox
                         class="fild-register"
-                        type="password"
                         v-model="user.discount_coupons"
                         :state="errors[0] ? false : valid ? true : null"
                       >
@@ -163,9 +230,14 @@ export default {
   components: { AuthPage },
   data() {
     return {
-      isResetPassword: false,
+      passwordfake: "fake-password",
+      hash: null,
       user: new User(),
     };
+  },
+  created() {
+    this.user = this.$store.getters.getUserContext;
+    this.hash = this.$route.query.hash;
   },
 };
 </script>

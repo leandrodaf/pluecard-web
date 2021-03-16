@@ -51,7 +51,6 @@ class AuthService {
 
     logOut() {
         return Http.post('/auth/logout', {})
-            .then(() => localStorage.removeItem('jwt'));
     }
 }
 

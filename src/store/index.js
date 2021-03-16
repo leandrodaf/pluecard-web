@@ -9,11 +9,13 @@ import ErrorResponse from '../services/ErrorResponse'
 Vue.use(Vuex)
 
 const jwt = JSON.parse(localStorage.getItem('jwt'));
+const userContext = JSON.parse(localStorage.getItem('userContext'));
 
 export default new Vuex.Store({
   state: {
     currentNotification: undefined,
-    jwt: jwt ? jwt : undefined
+    jwt: jwt ? jwt : undefined,
+    userContext: userContext ? userContext : undefined
   },
   mutations: {
     loginSuccess(state, jwt) {
@@ -21,20 +23,27 @@ export default new Vuex.Store({
     },
     cleanLogin(state) {
       state.jwt = undefined;
+      state.userContext = undefined;
     },
     cleanNotification(state) {
       state.currentNotification = undefined;
     },
     saveNotification(state, { data, isError = true }) {
       state.currentNotification = isError ? ErrorResponse.response(data) : data;
+    },
+    saveUserContext(state, userContext) {
+      state.userContext = userContext;
     }
-
   },
   actions: {
     logOut({ commit }) {
       commit('cleanNotification');
 
       AuthService.logOut().catch(error => commit('saveNotification', { data: error }));
+
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('userContext')
+
       commit('cleanLogin');
     },
     cleanNotification({ commit }) {
@@ -98,15 +107,24 @@ export default new Vuex.Store({
         return Promise.reject(error)
       })
     },
+    loadUserContext({ commit }) {
+      return AccountService.loadUserContext()
+        .then(userContext => {
+          commit('saveUserContext', userContext);
+          return Promise.resolve(userContext);
+        })
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          return Promise.reject(error)
+        })
+    },
     pushNotification({ commit }, data) {
       commit('cleanNotification');
       commit('saveNotification', { data: data, isError: false });
     }
   },
   getters: {
-    getError: state => {
-      return state.currentNotification;
-    },
+    getError: state => state.currentNotification,
 
     isAuth: state => {
 
@@ -120,6 +138,8 @@ export default new Vuex.Store({
 
       return new Date() <= new Date(now_utc);
     },
+
+    getUserContext: (state) => state.userContext
   },
   modules: {
     gauth
