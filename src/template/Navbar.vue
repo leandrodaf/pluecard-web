@@ -82,7 +82,7 @@ export default {
         .dispatch("logOut")
         .then(() => this.$router.push({ name: "Login" }));
 
-      if (this.gauthReady && this.isSignedIn) {
+      if (this.gauthReady) {
         this.signOut();
       }
     },
@@ -90,7 +90,6 @@ export default {
   computed: {
     ...mapGetters("gauth", {
       gauthReady: "isReady",
-      isSignedIn: "isSignedIn",
     }),
     loggedIn() {
       return this.$store.getters.isAuth;
