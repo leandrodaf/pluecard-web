@@ -1,17 +1,37 @@
 <template>
-  <button type="button" class="facebook-button social-btn">
-    <span class="facebook-button__icon">
-      <b-icon-facebook />
-    </span>
-    <span class="facebook-button__text"
-      ><slot>Sign in with facebook</slot></span
-    >
-  </button>
+  <div>
+    <v-facebook-login
+      v-model="model"
+      @sdk-init="handleSdkInit"
+      appId="389645282465369"
+    />
+    <button v-if="scope.logout && model.connected" @click="scope.logout">
+      Logout
+    </button>
+  </div>
 </template>
 
 <script>
+import VFacebookLogin from "vue-facebook-login-component";
+
 export default {
   name: "FacebookButton",
+  data: () => ({
+    FB: {},
+    model: {},
+    scope: {},
+  }),
+  methods: {
+    handleSdkInit({ FB, scope }) {
+      this.FB = FB;
+      this.scope = scope;
+
+      console.log(">>>", FB, scope);
+    },
+  },
+  components: {
+    VFacebookLogin,
+  },
 };
 </script>
 
