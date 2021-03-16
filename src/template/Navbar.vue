@@ -64,6 +64,8 @@
 </style>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -71,11 +73,25 @@ export default {
     };
   },
   methods: {
+    ...mapActions("gauth", {
+      signIn: "signIn",
+      signOut: "signOut",
+    }),
     logOut() {
-      this.$store.dispatch("logOut").then(() => this.$router.push({name: 'Login'}));
+      this.$store
+        .dispatch("logOut")
+        .then(() => this.$router.push({ name: "Login" }));
+      console.log(">>>", this.isSignedIn, !this.gauthReady);
+      if (this.isSignedIn && !this.gauthReady) {
+        this.signOut();
+      }
     },
   },
   computed: {
+    ...mapGetters("gauth", {
+      gauthReady: "isReady",
+      isSignedIn: "isSignedIn",
+    }),
     loggedIn() {
       return this.$store.getters.isAuth;
     },
