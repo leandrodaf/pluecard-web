@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import App from './App.vue'
+import vueTopprogress from 'vue-top-progress'
 
 import "./app.scss";
 import './vee-validate'
@@ -19,6 +20,7 @@ Vue.use(GoogleAPIs, {
 
 Vue.config.productionTip = false
 
+Vue.use(vueTopprogress)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 

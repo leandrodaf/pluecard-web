@@ -13,6 +13,7 @@ const userContext = JSON.parse(localStorage.getItem('userContext'));
 
 export default new Vuex.Store({
   state: {
+    loading: undefined,
     currentNotification: undefined,
     jwt: jwt ? jwt : undefined,
     userContext: userContext ? userContext : undefined
@@ -31,6 +32,12 @@ export default new Vuex.Store({
     saveNotification(state, { data, isError = true }) {
       state.currentNotification = isError ? ErrorResponse.response(data) : data;
     },
+    cleanLoading(state) {
+      state.loading = undefined;
+    },
+    saveLoading(state, type = 'start') {
+      state.loading = type;
+    },
     saveUserContext(state, userContext) {
       state.userContext = userContext;
     }
@@ -38,8 +45,14 @@ export default new Vuex.Store({
   actions: {
     logOut({ commit }) {
       commit('cleanNotification');
+      commit('saveLoading');
 
-      AuthService.logOut().catch(error => commit('saveNotification', { data: error }));
+      AuthService.logOut()
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail');
+        });
 
       localStorage.removeItem('jwt')
       localStorage.removeItem('userContext')
@@ -52,60 +65,80 @@ export default new Vuex.Store({
       return Promise.resolve(true);
     },
     login({ commit }, user) {
+      commit('saveLoading');
       commit('cleanNotification');
 
       return AuthService.logIn(user).then((jwt) => {
         commit('loginSuccess', jwt);
+        commit('saveLoading', 'done');
+
         return Promise.resolve(jwt)
       }).catch(error => {
         commit('saveNotification', { data: error })
+        commit('saveLoading', 'fail');
         return Promise.reject(error)
       })
     },
 
     socialLogin({ commit }, { driver, dataAuth }) {
+      commit('saveLoading');
       commit('cleanNotification');
       return AuthService.socialLogin(driver, dataAuth).then((jwt) => {
         commit('loginSuccess', jwt);
+        commit('saveLoading', 'done');
         return Promise.resolve(jwt)
       }).catch(error => {
         commit('saveNotification', { data: error })
+        commit('saveLoading', 'fail');
         return Promise.reject(error)
       })
     },
 
     accountConfirmation({ commit }, hash) {
       commit('cleanNotification');
+      commit('saveLoading');
 
       return AuthService.accountConfirmation(hash).then((jwt) => {
         commit('loginSuccess', jwt);
+        commit('saveLoading', 'done');
         return Promise.resolve(jwt)
       }).catch(error => {
         commit('saveNotification', { data: error })
+        commit('saveLoading', 'fail');
         return Promise.reject(error)
       })
     },
     register({ commit }, user) {
       commit('cleanNotification');
+      commit('saveLoading');
 
-      return AccountService.register(user).catch(error => {
-        commit('saveNotification', { data: error })
-        return Promise.reject(error)
-      })
+      return AccountService.register(user)
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail');
+          return Promise.reject(error)
+        })
     },
     forgotPassword({ commit }, user) {
-
-      return AccountService.forgotPassword(user).catch(error => {
-        commit('saveNotification', { data: error })
-        return Promise.reject(error)
-      })
+      commit('saveLoading');
+      return AccountService.forgotPassword(user)
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail');
+          return Promise.reject(error)
+        })
     },
     confirmForgotPassword({ commit }, { user, hash }) {
-
-      return AccountService.confirmForgotPassword(user, hash).catch(error => {
-        commit('saveNotification', { data: error })
-        return Promise.reject(error)
-      })
+      commit('saveLoading');
+      return AccountService.confirmForgotPassword(user, hash)
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail');
+          return Promise.reject(error)
+        })
     },
     loadUserContext({ commit }) {
       return AccountService.loadUserContext()
@@ -125,7 +158,7 @@ export default new Vuex.Store({
   },
   getters: {
     getError: state => state.currentNotification,
-
+    getloading: state => state.loading,
     isAuth: state => {
 
       if (state.jwt === undefined) {

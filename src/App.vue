@@ -1,27 +1,28 @@
 <template>
   <div id="app">
-    <!-- <Navbar></Navbar> -->
+    <vue-topprogress ref="topProgress" color="#FFFFFF"></vue-topprogress>
     <router-view />
-    <!-- <Footer></Footer> -->
   </div>
 </template>
 
 <script>
-// import Navbar from "./components/Navbar.vue";
-// import Footer from "./components/Footer.vue";
-
 export default {
   name: "App",
-  components: {
-    // Navbar,
-    // Footer,
-  },
+  components: {},
   computed: {
+    loading() {
+      return this.$store.getters.getloading;
+    },
     throwError() {
       return this.$store.getters.getError;
     },
   },
   watch: {
+    loading() {
+      if (this.$store.getters.getloading !== undefined) {
+        this.makeLoading(this.$store.getters.getloading);
+      }
+    },
     throwError() {
       if (this.$store.getters.getError !== undefined) {
         this.makeToast(this.$store.getters.getError);
@@ -29,6 +30,18 @@ export default {
     },
   },
   methods: {
+    makeLoading(type) {
+      if (type === "start") {
+        this.$refs.topProgress.start();
+      }
+      if (type === "done") {
+        this.$refs.topProgress.done();
+      }
+
+      if (type === "fail") {
+        this.$refs.topProgress.fail();
+      }
+    },
     makeToast(
       variant = {
         title: "Shii :/",
