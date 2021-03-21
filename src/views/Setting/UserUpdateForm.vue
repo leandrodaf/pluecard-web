@@ -65,7 +65,7 @@
             value="FAKE_VALUE"
           >
           </b-form-input>
-          <a href="#">Solicitar a troca da senha</a>
+          <a @click="requestPasswordRest" href="#passwordReset">Solicitar a troca da senha</a>
           <b-form-invalid-feedback>
             {{ errors[0] }}
           </b-form-invalid-feedback>
@@ -105,20 +105,40 @@ export default {
     };
   },
   methods: {
+    requestPasswordRest() {
+      this.$store
+        .dispatch("requestPasswordRest", this.user)
+        .then(() => {
+          this.$store.dispatch("loadUserContext");
+          this.$store.dispatch("pushNotification", {
+            title: "Atualização de senha",
+            body: "Confirme o token em seu email para resetar a senha",
+            varian: "success",
+          });
+        })
+        .catch((error) =>
+          error.hasErrorBag()
+            ? this.$refs.AutuhUser.setErrors(error.data.errors)
+            : undefined
+        );
+    },
     updateUserPersonal() {
+      this.$store
+        .dispatch("updateUser", this.user)
+        .then(() => {
+          this.$store.dispatch("loadUserContext");
 
-
-console.log('>>>>>');
-    this.$refs.topProgress.start()
-
-      // this.$store
-      //   .dispatch("updateUser", this.user)
-      //   .then(() => this.$router.push({ name: "Home" }))
-      //   .catch((error) => {
-      //     error.hasErrorBag()
-      //       ? this.$refs.AutuhUser.setErrors(error.data.errors)
-      //       : undefined;
-      //   });
+          this.$store.dispatch("pushNotification", {
+            title: "Atualização de informações de usuário",
+            body: "Atualizado com sucesso",
+            varian: "success",
+          });
+        })
+        .catch((error) =>
+          error.hasErrorBag()
+            ? this.$refs.AutuhUser.setErrors(error.data.errors)
+            : undefined
+        );
     },
   },
 };

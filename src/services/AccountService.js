@@ -50,9 +50,24 @@ class AccountService {
             password,
             password_confirmation,
             hash
-        })
+        });
     }
 
+    updateUser(user) {
+        const { name, newsletter, discount_coupons } = user
+        return Http.put('/users', { name, newsletter, discount_coupons });
+    }
+
+    requestPasswordRest() {
+        return Http.post('/account/password/reset');
+    }
+
+    updatePassword(data) {
+        return Http.put('/account/password', data);
+    }
+
+    
+    
 }
 
 export default new AccountService()

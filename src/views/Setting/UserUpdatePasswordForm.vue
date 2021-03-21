@@ -1,6 +1,5 @@
 <template>
   <ValidationObserver ref="accountInfo">
-
     <b-form
       slot-scope="{ validate, invalid }"
       @submit.prevent="validate().then(updateUserPasswordPersonal)"
@@ -88,14 +87,31 @@ export default {
     };
   },
   created() {
-    this.user = this.$store.getters.getUserContext;
+    this.user = this.$store.getters.getUserContext
     this.hash = this.$route.query.hash;
   },
   methods: {
     updateUserPasswordPersonal() {
-      // this.$refs.topProgress.start();
-      console.log(">>>>fdfdfd>", this.user);
-      // this.$refs.topProgress.done();
+      this.$store
+        .dispatch("updatePassword", {
+          password: this.user.password,
+          password_confirmation: this.user.password_confirmation,
+          hash: this.hash,
+        })
+        .then(() => {
+          this.$store.dispatch("pushNotification", {
+            title: "Atualização de senha",
+            body: "Senha atualizada com sucesso",
+            varian: "success",
+          });
+
+          return this.$router.push({ name: "RedirectSettings"});
+        })
+        .catch((error) =>
+          error.hasErrorBag()
+            ? this.$refs.AutuhUser.setErrors(error.data.errors)
+            : undefined
+        );
     },
   },
 };

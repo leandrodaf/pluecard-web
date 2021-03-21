@@ -48,8 +48,14 @@ export default {
     },
   },
   created() {
+    const hash = this.$route.query.hash || undefined;
+
+    if (this.loggedIn && !!hash) {
+      return this.$router.push({ name: "Settings", query: { hash } });
+    }
+
     if (this.loggedIn) {
-      this.$router.push({name: 'Home'});
+      return this.$router.push({ name: "Home" });
     }
   },
   methods: {},

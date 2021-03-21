@@ -12,7 +12,9 @@
           </b-col>
           <b-col lg="4">
             <div class="title text-center"><h2>Config</h2></div>
-            <div class="form">fsdfds</div>
+            <div class="form">
+              <user-update-configs :disableForm="!!hash" />
+            </div>
           </b-col>
         </b-row>
       </b-container>
@@ -47,6 +49,7 @@
 import AuthPage from "../template/AuthPage";
 import UserUpdateForm from "./Setting/UserUpdateForm";
 import UserUpdatePasswordForm from "./Setting/UserUpdatePasswordForm";
+import UserUpdateConfigs from "./Setting/UserUpdateConfigs";
 
 export default {
   name: "Setting",
@@ -54,6 +57,7 @@ export default {
     AuthPage,
     UserUpdateForm,
     UserUpdatePasswordForm,
+    UserUpdateConfigs,
   },
   data() {
     return {

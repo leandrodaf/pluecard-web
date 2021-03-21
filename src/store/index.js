@@ -94,6 +94,18 @@ export default new Vuex.Store({
       })
     },
 
+    updateUser({ commit }, user) {
+      commit('saveLoading');
+      commit('cleanNotification');
+      return AccountService.updateUser(user)
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail');
+          return Promise.reject(error)
+        })
+    },
+
     accountConfirmation({ commit }, hash) {
       commit('cleanNotification');
       commit('saveLoading');
@@ -154,7 +166,28 @@ export default new Vuex.Store({
     pushNotification({ commit }, data) {
       commit('cleanNotification');
       commit('saveNotification', { data: data, isError: false });
+    },
+    requestPasswordRest({ commit }) {
+      commit('saveLoading');
+      return AccountService.requestPasswordRest()
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail')
+          return Promise.reject(error)
+        })
+    },
+    updatePassword({commit}, data){
+      commit('saveLoading');
+      return AccountService.updatePassword(data)
+        .then(() => commit('saveLoading', 'done'))
+        .catch(error => {
+          commit('saveNotification', { data: error })
+          commit('saveLoading', 'fail')
+          return Promise.reject(error)
+        })
     }
+
   },
   getters: {
     getError: state => state.currentNotification,
